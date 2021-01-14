@@ -1,3 +1,4 @@
+import { logger, sealed, writable } from './courses/decorators';
 import * as Interfaces from './interfaces';
 
 class Employee {
@@ -19,14 +20,31 @@ class Researcher {
     }
 }
 
+export const CLASS_INFO = Symbol();
+
+// @logger
+// @sealed('UniversityLibrarian')
 class UniversityLibrarian implements Interfaces.Librarian, Employee, Researcher {
     
     name: string;
     email: string;
     department: string;
+
+    [CLASS_INFO](): void {
+        console.log('This class represents a UniversityLibrarian');
+    }
+
+    static [Symbol.hasInstance](obj: Object) {
+        return obj.hasOwnProperty('name') && obj.hasOwnProperty('assistCustomer');
+    }
     
     assistCustomer(custName: string) {
         console.log(this.name + ' is assisting ' + custName);
+    }
+
+    @writable(true)
+    assistFaculty() {
+        console.log('Assisiting faculty.');
     }
 
 	// implementation of the following to be provided by the mixing function
@@ -34,6 +52,21 @@ class UniversityLibrarian implements Interfaces.Librarian, Employee, Researcher 
     addToSchedule: () => void;
     logTitle: () => void;
     doResearch: (topic: string) => void;    
+}
+
+// @logger
+export class PublicLibrarian implements Interfaces.Librarian {
+    name: string;
+    email: string;
+    department: string;
+
+    assistCustomer(custName: string) {
+        console.log('Assisiting customer.');
+    }
+
+    teachCommunity() {
+        console.log('Teach community.');
+    }
 }
 
 abstract class ReferenceItem {

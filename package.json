@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tsc": "./node_modules/typescript/bin/tsc",
-    "compileTs": "tsc --target ES5 ./courses/string-literals.ts --watch"
+    "tsc": "./node_modules/typescript/bin/tsc"
   },
   "author": "",
   "license": "ISC",
